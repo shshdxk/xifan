@@ -22,7 +22,32 @@ public class DelayedMessageService {
     private final Map<String, RBlockingDeque<?>> blockingDequeHashMap = new HashMap<>();
     private final Map<String, RDelayedQueue<?>> delayedQueueMap = new HashMap<>();
 
-    public <T> void addMessage(DelayedMessageHandler<T> handler, T message, long delayMillis) {
+    /**
+     * 添加处理器,处理器不会自动被添加,项目初始化时请添加全部的处理器,不然会导致没添加处理器时消息无法被处理
+     * @param handler 处理器
+     * @param clazz 消息类型
+     * @param <T>
+     */
+    public <T> void addHandler(DelayedMessageHandler<T> handler, Class<T> clazz) {
+        String key = handler.getClass() + "." + clazz.getName();
+        RDelayedQueue<T> delayedQueue;
+        if (!delayedQueueMap.containsKey(key)) {
+            RBlockingDeque<T> blockingDeque = redissonClient.getBlockingDeque(key);
+            delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
+            blockingDequeHashMap.put(key, blockingDeque);
+            delayedQueueMap.put(key, delayedQueue);
+            Executors.newSingleThreadExecutor().submit(() -> this.processMessages(delayedQueue, blockingDeque, handler));
+        }
+    }
+
+    /**
+     * 添加延迟消息
+     * @param handler 处理器
+     * @param message 消息内容
+     * @param delaySeconds 单位:秒
+     * @param <T>
+     */
+    public <T> void addMessage(DelayedMessageHandler<T> handler, T message, long delaySeconds) {
         String key = handler.getClass() + "." + message.getClass();
         RDelayedQueue<T> delayedQueue;
         if (delayedQueueMap.containsKey(key)) {
@@ -39,7 +64,7 @@ public class DelayedMessageService {
             delayedQueueMap.put(key, delayedQueue);
             Executors.newSingleThreadExecutor().submit(() -> this.processMessages(delayedQueue, blockingDeque, handler));
         }
-        delayedQueue.offer(message, delayMillis, TimeUnit.SECONDS);
+        delayedQueue.offer(message, delaySeconds, TimeUnit.SECONDS);
     }
 
     public <T> void processMessages(RDelayedQueue<T> delayedQueue, RBlockingDeque<T> blockingDeque, DelayedMessageHandler<T> handler) {
