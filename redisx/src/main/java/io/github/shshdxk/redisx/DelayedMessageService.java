@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingDeque;
 import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -38,24 +37,29 @@ public class DelayedMessageService {
             delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
             blockingDequeHashMap.put(key, blockingDeque);
             delayedQueueMap.put(key, delayedQueue);
-            Executors.newSingleThreadExecutor().submit(() -> this.processMessages(blockingDeque, handler));
+            Executors.newSingleThreadExecutor().submit(() -> this.processMessages(delayedQueue, blockingDeque, handler));
         }
         delayedQueue.offer(message, delayMillis, TimeUnit.SECONDS);
     }
 
-    public <T> void processMessages(RBlockingDeque<T> blockingDeque, DelayedMessageHandler<T> handler) {
-        try {
-            while (true) {
+    public <T> void processMessages(RDelayedQueue<T> delayedQueue, RBlockingDeque<T> blockingDeque, DelayedMessageHandler<T> handler) {
+        while (true) {
+            try {
                 T message = blockingDeque.take();
-                // Process the message
-                log.info("消息被处理: " + message);
-                handler.run(blockingDeque);
+                if (!handler.run(blockingDeque, message)) {
+                    delayedQueue.offer(message, 1000, TimeUnit.SECONDS);
+                }
+            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+                log.warn(e.getMessage());
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ignored) {
+                }
+            } catch (Throwable e) {
+                log.error("中断异常", e);
             }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            log.error("中断异常", e);
         }
     }
-
 
 }
