@@ -13,14 +13,26 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 
+/**
+ * Conjunction specification
+ * @param <T> beanType
+ */
 public class Conjunction<T> implements Specification<T> {
     private final Collection<Specification<T>> specs;
 
+    /**
+     * and
+     * @param innerSpecs Specifications
+     */
     @SafeVarargs
     public Conjunction(Specification<T>... innerSpecs) {
         this(Arrays.asList(innerSpecs));
     }
 
+    /**
+     * and
+     * @param innerSpecs Specifications
+     */
     public Conjunction(Collection<Specification<T>> innerSpecs) {
         this.specs = innerSpecs;
     }

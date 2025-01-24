@@ -8,14 +8,27 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Join specification
+ * @param <T> beanType
+ */
 public class Join<T> implements Specification<T> {
     private final List<String> pathsToFetch;
     private final JoinType joinType;
 
+    /**
+     * constructor
+     * @param path fetch path
+     */
     public Join(String path) {
         this(new String[]{path}, JoinType.INNER);
     }
 
+    /**
+     * constructor
+     * @param pathsToFetch fetch path
+     * @param joinType join type
+     */
     public Join(String[] pathsToFetch, JoinType joinType) {
         this.pathsToFetch = Arrays.asList(pathsToFetch);
         this.joinType = joinType;

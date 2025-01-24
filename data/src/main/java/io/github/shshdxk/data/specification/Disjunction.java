@@ -13,14 +13,26 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 
+/**
+ * Disjunction specification
+ * @param <T> beanType
+ */
 public class Disjunction<T> implements Specification<T> {
     private final Collection<Specification<T>> specs;
 
+    /**
+     * or
+     * @param specs Specifications
+     */
     @SafeVarargs
     public Disjunction(Specification<T>... specs) {
         this(Arrays.asList(specs));
     }
 
+    /**
+     * or
+     * @param specs Specifications
+     */
     public Disjunction(Collection<Specification<T>> specs) {
         this.specs = specs;
     }

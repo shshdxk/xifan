@@ -18,7 +18,7 @@ public enum Operator {
     }
 
     /**
-     * @param op >, >=, <, <=, =
+     * @param op &gt;, &ge;, &lt;, &le;, =;
      * @return
      */
     public static Operator fromOp(String op) {

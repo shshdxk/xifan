@@ -6,9 +6,17 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
+/**
+ * Not specification
+ * @param <T> beanType
+ */
 public class Not<T> implements Specification<T> {
     private final Specification<T> original;
 
+    /**
+     * constructor
+     * @param original specification
+     */
     public Not(Specification<T> original) {
         this.original = original;
     }

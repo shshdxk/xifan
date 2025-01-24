@@ -14,6 +14,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * PredicateBuilder specification
+ * @param <T> beanType
+ */
 public class PredicateBuilder<T> implements Specification<T> {
     private final Map<String, Join<?, ?>> joins = Maps.newHashMap();
     private final Root<T> root;

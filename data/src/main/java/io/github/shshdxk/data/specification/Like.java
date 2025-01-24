@@ -9,18 +9,44 @@ import jakarta.persistence.criteria.Root;
 
 import java.util.Objects;
 
+/**
+ * Like specification
+ * @param <T> beanType
+ */
 public class Like<T> extends PathSpecification<T> {
+
+    /**
+     * pattern
+     */
     protected String pattern;
     private final boolean ignoreCase;
 
+    /**
+     * constructor
+     * @param path field name
+     * @param arg pattern
+     */
     public Like(String path, String arg) {
         this(path, arg, MatchMode.ANYWHERE, true);
     }
 
+    /**
+     * constructor
+     * @param path field name
+     * @param arg pattern
+     * @param mode like mode
+     */
     public Like(String path, String arg, MatchMode mode) {
         this(path, arg, mode, true);
     }
 
+    /**
+     * constructor
+     * @param path field name
+     * @param arg pattern
+     * @param mode like mode
+     * @param ignoreCase ignore case
+     */
     public Like(String path, String arg, MatchMode mode, boolean ignoreCase) {
         super(path);
         this.ignoreCase = ignoreCase;

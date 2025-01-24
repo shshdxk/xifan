@@ -30,7 +30,6 @@ public abstract class PathSpecification<T> implements Specification<T> {
             }
 
             if (join == null) {
-                int var6 = parts.length;
 
                 for (String field : parts) {
                     expr = Objects.requireNonNullElse(expr, root).get(field);

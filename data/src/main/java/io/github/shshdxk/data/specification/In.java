@@ -3,9 +3,18 @@ package io.github.shshdxk.data.specification;
 
 import jakarta.persistence.criteria.*;
 
+/**
+ * In specification
+ * @param <T> beanType
+ */
 public class In<T> extends PathSpecification<T> {
     private final Object[] allowedValues;
 
+    /**
+     * constructor
+     * @param path field name
+     * @param allowedValues allowed values
+     */
     public In(String path, Object[] allowedValues) {
         super(path);
         this.allowedValues = allowedValues;

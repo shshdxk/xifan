@@ -6,9 +6,11 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
+/**
+ * Distinct specification
+ * @param <T> beanType
+ */
 public class Distinct<T> implements Specification<T> {
-    public Distinct() {
-    }
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {

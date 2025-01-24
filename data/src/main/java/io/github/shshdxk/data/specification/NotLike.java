@@ -7,18 +7,43 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+/**
+ * Not like specification
+ * @param <T> beanType
+ */
 public class NotLike<T> extends PathSpecification<T> {
+    /**
+     * pattern
+     */
     protected String pattern;
     private final boolean ignoreCase;
 
+    /**
+     * constructor
+     * @param path field name
+     * @param arg pattern
+     */
     public NotLike(String path, String arg) {
         this(path, arg, MatchMode.ANYWHERE);
     }
 
+    /**
+     * constructor
+     * @param path field name
+     * @param arg pattern
+     * @param mode like mode
+     */
     public NotLike(String path, String arg, MatchMode mode) {
         this(path, arg, mode, true);
     }
 
+    /**
+     * constructor
+     * @param path field name
+     * @param arg pattern
+     * @param mode like mode
+     * @param ignoreCase ignore case
+     */
     public NotLike(String path, String arg, MatchMode mode, boolean ignoreCase) {
         super(path);
         this.ignoreCase = ignoreCase;

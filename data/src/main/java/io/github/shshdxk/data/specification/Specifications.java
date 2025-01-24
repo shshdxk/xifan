@@ -8,6 +8,9 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * Specifications
+ */
 public class Specifications {
     public Specifications() {
     }

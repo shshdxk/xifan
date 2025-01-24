@@ -4,10 +4,21 @@ package io.github.shshdxk.data.specification;
 import com.google.common.base.Objects;
 import jakarta.persistence.criteria.*;
 
+/**
+ * Compare specification
+ * @param <T> beanType
+ * @param <Y> valueType
+ */
 public class Compare<T, Y extends Comparable<? super Y>> extends PathSpecification<T> {
     private final Operator op;
     private final Y value;
 
+    /**
+     * 构造方法
+     * @param path 字段
+     * @param op 比较符
+     * @param value 值
+     */
     public Compare(String path, Operator op, Y value) {
         super(path);
         this.op = op;
