@@ -7,10 +7,10 @@
     <parent>
         <groupId>io.github.shshdxk</groupId>
         <artifactId>xifan-parent</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
     </parent>
     <artifactId>redisx</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -32,4 +32,103 @@
             <artifactId>redisson</artifactId>
         </dependency>
     </dependencies>
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            &lt;!&ndash; maven编译插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.13.0</version>-->
+<!--                <configuration>-->
+<!--                    <source>${maven.compiler.source}</source>-->
+<!--                    <target>${maven.compiler.target}</target>-->
+<!--                    <encoding>${project.build.sourceEncoding}</encoding>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; maven Source插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-source-plugin</artifactId>-->
+<!--                <version>3.3.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>attach-sources</id>-->
+<!--                        <goals>-->
+<!--                            <goal>jar-no-fork</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; maven Javadoc插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--                <version>3.11.2</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>attach-javadocs</id>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; gpg插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-gpg-plugin</artifactId>-->
+<!--                <version>3.2.7</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; 改成你自己的路径 &ndash;&gt;-->
+<!--                    <executable>C:/Program Files (x86)/GnuPG/bin/gpg.exe</executable>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>sign-artifacts</id>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>sign</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.sonatype.central</groupId>-->
+<!--                <artifactId>central-publishing-maven-plugin</artifactId>-->
+<!--                <version>0.7.0</version>-->
+<!--                <extensions>true</extensions>-->
+<!--                <configuration>-->
+<!--                    <publishingServerId>central</publishingServerId>-->
+<!--                    &lt;!&ndash;<tokenAuth>true</tokenAuth>&ndash;&gt;-->
+<!--                    &lt;!&ndash; 若要自动发布，添加以下配置 &ndash;&gt;-->
+<!--                    &lt;!&ndash;<autoPublish>true</autoPublish>&ndash;&gt;-->
+<!--                    &lt;!&ndash; 一直等到发布完成 &ndash;&gt;-->
+<!--                    &lt;!&ndash;<waitUntil>published</waitUntil>&ndash;&gt;-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+<!--    &lt;!&ndash; 版本控制 &ndash;&gt;-->
+<!--    <scm>-->
+<!--        <url>https://github.com/shshdxk/xifan/tree/main/redisx</url>-->
+<!--        <connection>scm:git:https://github.com/shshdxk/xifan.git</connection>-->
+<!--        <developerConnection>scm:git:https://github.com/shshdxk/xifan.git</developerConnection>-->
+<!--    </scm>-->
+
+<!--    &lt;!&ndash; 开发者信息 &ndash;&gt;-->
+<!--    <developers>-->
+<!--        <developer>-->
+<!--            <name>xuechun</name>-->
+<!--            <email>609022045@qq.com</email>-->
+<!--        </developer>-->
+<!--    </developers>-->
+
+<!--    &lt;!&ndash; 开源协议 &ndash;&gt;-->
+<!--    <licenses>-->
+<!--        <license>-->
+<!--            <name>The Apache License, Version 2.0</name>-->
+<!--            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>-->
+<!--        </license>-->
+<!--    </licenses>-->
 </project>
