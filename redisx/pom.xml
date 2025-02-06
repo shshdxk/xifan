@@ -10,7 +10,6 @@
         <version>0.0.2</version>
     </parent>
     <artifactId>redisx</artifactId>
-    <version>0.0.2</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
