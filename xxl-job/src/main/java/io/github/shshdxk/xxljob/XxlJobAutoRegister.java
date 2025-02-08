@@ -1,10 +1,10 @@
 package io.github.shshdxk.xxljob;
 
 import com.xxl.job.core.handler.annotation.XxlJob;
+import io.github.shshdxk.common.context.SpringContext;
 import io.github.shshdxk.xxljob.annotation.XxlRegister;
 import io.github.shshdxk.xxljob.config.XxlJobRegisterConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.MethodIntrospector;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
@@ -15,11 +15,9 @@ import java.util.Optional;
 
 @Slf4j
 public class XxlJobAutoRegister {
-    private ApplicationContext applicationContext;
 
-    public void Register(ApplicationContext applicationContext, XxlJobRegisterConfig xxlJobRegisterConfig) {
+    public void Register(XxlJobRegisterConfig xxlJobRegisterConfig) {
         try {
-            this.applicationContext = applicationContext;
             XxlJobUtil.xxlJobRegisterConfig = xxlJobRegisterConfig;
             // 注册执行器
             addJobGroup();
@@ -46,9 +44,9 @@ public class XxlJobAutoRegister {
         List<XxlJobUtil.XxlJobGroup> jobGroups = XxlJobUtil.getJobGroup();
         XxlJobUtil.XxlJobGroup xxlJobGroup = jobGroups.get(0);
 
-        String[] beanDefinitionNames = applicationContext.getBeanNamesForType(Object.class, false, true);
+        String[] beanDefinitionNames = SpringContext.getContext().getBeanNamesForType(Object.class, false, true);
         for (String beanDefinitionName : beanDefinitionNames) {
-            Object bean = applicationContext.getBean(beanDefinitionName);
+            Object bean = SpringContext.getContext().getBean(beanDefinitionName);
 
             Map<Method, XxlJob> annotatedMethods = MethodIntrospector.selectMethods(bean.getClass(),
                     (MethodIntrospector.MetadataLookup<XxlJob>) method -> AnnotatedElementUtils.findMergedAnnotation(method, XxlJob.class));
