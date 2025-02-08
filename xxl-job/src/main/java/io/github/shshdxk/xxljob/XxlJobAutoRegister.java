@@ -3,28 +3,23 @@ package io.github.shshdxk.xxljob;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import io.github.shshdxk.xxljob.annotation.XxlRegister;
 import io.github.shshdxk.xxljob.config.XxlJobRegisterConfig;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.MethodIntrospector;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Component
 @Slf4j
-@RequiredArgsConstructor
 public class XxlJobAutoRegister {
-    private final ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
-    @Async
-    public void onApplicationEvent(XxlJobRegisterConfig xxlJobRegisterConfig) {
+    public void Register(ApplicationContext applicationContext, XxlJobRegisterConfig xxlJobRegisterConfig) {
         try {
+            this.applicationContext = applicationContext;
             XxlJobUtil.xxlJobRegisterConfig = xxlJobRegisterConfig;
             // 注册执行器
             addJobGroup();
@@ -33,6 +28,7 @@ public class XxlJobAutoRegister {
         } catch (Exception e) {
             // 这里不输出详细的日志，自动注册执行器失败的话就手动去加执行器，自动注册只是为了偷懒
             log.error("自动注册xxlJob执行器失败" + e.getMessage());
+            log.error("自动注册xxlJob执行器失败", e);
         }
     }
 

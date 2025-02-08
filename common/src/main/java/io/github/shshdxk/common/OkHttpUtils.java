@@ -79,9 +79,16 @@ public class OkHttpUtils {
     }
 
     public static Response post(String url, String json, Map<String, String> headers) throws IOException {
-        RequestBody body = RequestBody.create(json, JSON);
         if (headers == null) {
             headers = new HashMap<>();
+        }
+
+        RequestBody body;
+        String contentType = headers.get("Content-Type");
+        if (contentType == null) {
+            body = RequestBody.create(json, JSON);
+        } else {
+            body = RequestBody.create(json, MediaType.parse(contentType));
         }
 
         Request request = new Request.Builder()
@@ -100,7 +107,14 @@ public class OkHttpUtils {
             }
         }
 
-        RequestBody body = RequestBody.create(json, JSON);
+        RequestBody body;
+        String contentType = headers.get("Content-Type");
+        if (contentType == null) {
+            body = RequestBody.create(json, JSON);
+        } else {
+            body = RequestBody.create(json, MediaType.parse(contentType));
+        }
+
         Request request = new Request.Builder()
             .url(builder.build().toString())
             .headers(headers)
@@ -149,7 +163,14 @@ public class OkHttpUtils {
             }
         }
 
-        RequestBody body = RequestBody.create(json, JSON);
+        RequestBody body;
+        String contentType = headers.get("Content-Type");
+        if (contentType == null) {
+            body = RequestBody.create(json, JSON);
+        } else {
+            body = RequestBody.create(json, MediaType.parse(contentType));
+        }
+
         Request request = new Request.Builder()
             .url(builder.build().toString())
             .headers(headers)
@@ -166,7 +187,14 @@ public class OkHttpUtils {
             }
         }
 
-        RequestBody body = RequestBody.create(json, JSON);
+        RequestBody body;
+        String contentType = headers.get("Content-Type");
+        if (contentType == null) {
+            body = RequestBody.create(json, JSON);
+        } else {
+            body = RequestBody.create(json, MediaType.parse(contentType));
+        }
+
         Request request = new Request.Builder()
             .url(builder.build().toString())
             .headers(headers)
@@ -175,6 +203,16 @@ public class OkHttpUtils {
         return call(request);
     }
 
+    /**
+     * 发送请求
+     * @param url 请求地址
+     * @param method 请求方法
+     * @param headers 请求头
+     * @param queryParams 请求参数
+     * @param json 请求体
+     * @return
+     * @throws IOException
+     */
     public static Response send(String url, String method, Headers headers, Map<String, String> queryParams, String json) throws IOException {
         HttpUrl.Builder builder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         if (queryParams != null) {
@@ -183,7 +221,14 @@ public class OkHttpUtils {
             }
         }
 
-        RequestBody body = json == null ? null : RequestBody.create(json, JSON);
+        RequestBody body;
+        String contentType = headers.get("Content-Type");
+        if (contentType == null) {
+            body = json == null ? null : RequestBody.create(json, JSON);
+        } else {
+            body = json == null ? null : RequestBody.create(json, MediaType.parse(contentType));
+        }
+
         Request request = new Request.Builder()
             .url(builder.build().toString())
             .headers(headers)
@@ -244,6 +289,12 @@ public class OkHttpUtils {
         return call(request);
     }
 
+    /**
+     * 下载文件
+     * @param url
+     * @param file
+     * @throws IOException
+     */
     public static void download(String url, File file) throws IOException {
         FileUtils.forceMkdir(file.getParentFile());
         String errorString = null;
