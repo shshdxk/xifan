@@ -13,9 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * 自动注册xxl-job执行器
+ */
 @Slf4j
 public class XxlJobAutoRegister {
 
+    /**
+     * 自动注册执行器
+     * @param xxlJobRegisterConfig xxl-job注册配置
+     */
     public void Register(XxlJobRegisterConfig xxlJobRegisterConfig) {
         try {
             XxlJobUtil.xxlJobRegisterConfig = xxlJobRegisterConfig;
@@ -30,6 +37,9 @@ public class XxlJobAutoRegister {
         }
     }
 
+    /**
+     * 添加执行器
+     */
     private void addJobGroup() {
         if (XxlJobUtil.preciselyCheck()) {
             return;
@@ -40,6 +50,9 @@ public class XxlJobAutoRegister {
         }
     }
 
+    /**
+     * 添加任务
+     */
     private void addJobInfo() {
         List<XxlJobUtil.XxlJobGroup> jobGroups = XxlJobUtil.getJobGroup();
         XxlJobUtil.XxlJobGroup xxlJobGroup = jobGroups.get(0);
@@ -79,6 +92,13 @@ public class XxlJobAutoRegister {
         }
     }
 
+    /**
+     * 创建XxlJobInfo
+     * @param xxlJobGroup
+     * @param xxlJob
+     * @param xxlRegister
+     * @return
+     */
     private XxlJobUtil.XxlJobInfo createXxlJobInfo(XxlJobUtil.XxlJobGroup xxlJobGroup, XxlJob xxlJob, XxlRegister xxlRegister) {
         XxlJobUtil.XxlJobInfo xxlJobInfo = new XxlJobUtil.XxlJobInfo();
         xxlJobInfo.setJobGroup(xxlJobGroup.getId());

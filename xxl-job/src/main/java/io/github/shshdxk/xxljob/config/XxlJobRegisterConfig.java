@@ -3,6 +3,9 @@ package io.github.shshdxk.xxljob.config;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author shshdxk
+ */
 @Getter
 @Setter
 public class XxlJobRegisterConfig {

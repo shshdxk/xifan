@@ -19,12 +19,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * xxlJob接口类操作
+ */
 @Slf4j
 public class XxlJobUtil {
+    /**
+     * xxlJob配置
+     */
     public static XxlJobRegisterConfig xxlJobRegisterConfig = null;
     private final static Map<String,String> loginCookie = new HashMap<>();
     private static Headers header = Headers.of("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
+    /**
+     * 组装表单参数
+     * @param params
+     * @return String
+     */
     private static String getFormParam(Map<String, Object> params) {
         return params.entrySet().stream().map(u -> {
                     if (u.getValue() == null) {
@@ -33,10 +44,6 @@ public class XxlJobUtil {
                         return u.getKey() + "=" + URLEncoder.encode(u.getValue() + "", StandardCharsets.UTF_8);
                     }
                 }).collect(Collectors.joining("&"));
-    }
-
-    public static void main(String[] args) {
-        getJobGroup();
     }
 
     /**
@@ -67,7 +74,7 @@ public class XxlJobUtil {
 
     /**
      * 获取token
-     * @return
+     * @return cookie
      */
     public static String getCookie() {
         for (int i = 0; i < 3; i++) {
@@ -82,7 +89,7 @@ public class XxlJobUtil {
 
     /**
      * 创建一个JobGroupService，根据appName和执行器名称title查询执行器列表：
-     * @return
+     * @return groups
      */
     public static List<XxlJobGroup> getJobGroup() {
         getCookie();
@@ -104,7 +111,7 @@ public class XxlJobUtil {
 
     /**
      * 我们在后面要根据配置文件中的appName和title判断当前执行器是否已经被注册到调度中心过，如果已经注册过那么则跳过，而/jobgroup/pageList接口是一个模糊查询接口，所以在查询列表的结果列表中，还需要再进行一次精确匹配。
-     * @return
+     * @return 是否已注册过
      */
     public static boolean preciselyCheck() {
         List<XxlJobGroup> jobGroup = getJobGroup();
@@ -119,7 +126,7 @@ public class XxlJobUtil {
 
     /**
      * 注册新executor到调度中心
-     * @return
+     * @return 是否注册成功
      */
     public static boolean autoRegisterGroup() {
         getCookie();
@@ -139,9 +146,9 @@ public class XxlJobUtil {
 
     /**
      * 查询JobInfoService，根据执行器id，jobHandler名称查询任务列表，和上面一样，也是模糊查询
-     * @param jobGroupId
-     * @param executorHandler
-     * @return
+     * @param jobGroupId jobGroupId
+     * @param executorHandler executorHandler
+     * @return jobs
      */
     public static List<XxlJobInfo> getJobInfo(Integer jobGroupId, String executorHandler) {
         getCookie();
@@ -162,8 +169,8 @@ public class XxlJobUtil {
 
     /**
      * 注册一个新任务，最终返回创建的新任务的id
-     * @param xxlJobInfo
-     * @return
+     * @param xxlJobInfo xxlJobInfo
+     * @return id
      */
     public static Integer addJobInfo(XxlJobInfo xxlJobInfo) {
         getCookie();
@@ -180,6 +187,10 @@ public class XxlJobUtil {
         return -1;
     }
 
+    /**
+     * xxlJob返回数据
+     * @param <T> 类型
+     */
     @Getter
     @Setter
     public static class XxlJobData<T> {
@@ -188,6 +199,9 @@ public class XxlJobUtil {
         private String content;
     }
 
+    /**
+     * 执行器组
+     */
     @Getter
     @Setter
     public static class XxlJobGroup {
@@ -195,6 +209,9 @@ public class XxlJobUtil {
         private String appname;
     }
 
+    /**
+     * 任务
+     */
     @Getter
     @Setter
     public static class XxlJobInfo {
