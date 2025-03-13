@@ -157,6 +157,8 @@ public class XxlJobUtil {
         param.put("jobGroup", jobGroupId);
         param.put("executorHandler", executorHandler);
         param.put("triggerStatus", -1);
+        param.put("jobDesc", "");
+        param.put("author", "");
         try {
             Response response = OkHttpUtils.post(url, header, null, getFormParam(param));
             XxlJobData<List<XxlJobInfo>> listData = StandardObjectMapper.readValue(OkHttpUtils.getResponseBody(response).get(), new TypeReference<>(){});
