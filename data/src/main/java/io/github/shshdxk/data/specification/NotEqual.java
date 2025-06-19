@@ -11,6 +11,9 @@ import jakarta.persistence.criteria.Root;
  * @param <T> beanType
  */
 public class NotEqual<T> extends PathSpecification<T> {
+    /**
+     * field value
+     */
     private final Object value;
 
     /**

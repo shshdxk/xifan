@@ -1,11 +1,14 @@
 package io.github.shshdxk.common;
 
+/**
+ * 数学工具类
+ */
 public class NumberUtil {
     /**
      * 循环左移
-     * @param value
-     * @param positions
-     * @return
+     * @param value 需要计算的值
+     * @param positions 移动的位数
+     * @return 最终值
      */
     public static byte rotateLeft(byte value, int positions) {
         // 保证 positions 在 0-7 范围内
@@ -15,9 +18,9 @@ public class NumberUtil {
 
     /**
      * 循环右移
-     * @param value
-     * @param positions
-     * @return
+     * @param value 需要计算的值
+     * @param positions 移动的位数
+     * @return 最终值
      */
     public static byte rotateRight(byte value, int positions) {
         // 保证 positions 在 0-7 范围内
@@ -27,9 +30,9 @@ public class NumberUtil {
 
     /**
      * 循环左移
-     * @param value
-     * @param positions
-     * @return
+     * @param value 需要计算的值
+     * @param positions 移动的位数
+     * @return 移动后的值
      */
     public static int rotateLeft(int value, int positions) {
         // 保证 positions 在 0-31 范围内
@@ -39,9 +42,9 @@ public class NumberUtil {
 
     /**
      * 循环右移
-     * @param value
-     * @param positions
-     * @return
+     * @param value 需要计算的值
+     * @param positions 移动的位数
+     * @return 移动后的值
      */
     public static int rotateRight(int value, int positions) {
         // 保证 positions 在 0-31 范围内
@@ -49,7 +52,10 @@ public class NumberUtil {
         return (byte) ((value >>> positions) | (value << (32 - positions)));
     }
 
-
+    /**
+     * test
+     * @param args 参数
+     */
     public static void main(String[] args) {
         byte value = (byte) 0b11001101; // 0x0D (13 in decimal)
 

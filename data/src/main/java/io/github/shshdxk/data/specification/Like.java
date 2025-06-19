@@ -19,6 +19,9 @@ public class Like<T> extends PathSpecification<T> {
      * pattern
      */
     protected String pattern;
+    /**
+     * like mode
+     */
     private final boolean ignoreCase;
 
     /**

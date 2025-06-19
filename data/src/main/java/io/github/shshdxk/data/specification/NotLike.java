@@ -16,6 +16,9 @@ public class NotLike<T> extends PathSpecification<T> {
      * pattern
      */
     protected String pattern;
+    /**
+     * ignore case
+     */
     private final boolean ignoreCase;
 
     /**

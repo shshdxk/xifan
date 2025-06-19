@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Objects;
 
 /**
+ * GenericFilter
  */
 @Getter
 public class GenericFilter<T> implements SearchFilter<T> {

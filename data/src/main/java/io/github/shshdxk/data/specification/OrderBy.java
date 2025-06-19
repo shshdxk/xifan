@@ -9,6 +9,9 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.ArrayList;
 
 public class OrderBy<T> implements Specification<T> {
+    /**
+     * 排序
+     */
     private final Sort sort;
 
     public OrderBy(Sort sort) {

@@ -19,7 +19,7 @@ public class ZipUtil {
      * @param fileToZip 需要压缩的文件或文件夹
      * @param fileName 第一层目录名
      * @param destZip 目标文件
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static void zipFile(File fileToZip, String fileName, File destZip) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(destZip);
@@ -34,7 +34,7 @@ public class ZipUtil {
      * @param fileToZip 需要压缩的文件或文件夹
      * @param fileName 层级目录名
      * @param zipOut 输出zip流
-     * @throws IOException
+     * @throws IOException IOException
      */
     private static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
         if (fileToZip.isDirectory()) {
@@ -66,10 +66,10 @@ public class ZipUtil {
 
     /**
      * 将文件流写入压缩包
-     * @param inputStream
+     * @param inputStream 输入流
      * @param fileName 压缩包内文件目录和名称
-     * @param zipOut
-     * @throws IOException
+     * @param zipOut 输出流
+     * @throws IOException IOException
      */
     public static void writeFile(InputStream inputStream, String fileName, ZipOutputStream zipOut) throws IOException {
         writeFile(inputStream, fileName, zipOut, false);
@@ -77,11 +77,11 @@ public class ZipUtil {
 
     /**
      * 将文件流写入压缩包
-     * @param inputStream
+     * @param inputStream 输入流
      * @param fileName 压缩包内文件目录和名称
-     * @param zipOut
+     * @param zipOut 输出流
      * @param withUTF8BOM inputStream是否额外写入utf8BOM头{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}
-     * @throws IOException
+     * @throws IOException IOException
      */
     public static void writeFile(InputStream inputStream, String fileName, ZipOutputStream zipOut, boolean withUTF8BOM) throws IOException {
         ZipEntry zipEntry = new ZipEntry(fileName);
@@ -98,9 +98,9 @@ public class ZipUtil {
 
     /**
      * 解压文件
-     * @param zipFilePath
-     * @param destDir
-     * @throws IOException
+     * @param zipFilePath 源文件
+     * @param destDir 目标目录
+     * @throws IOException IOException
      */
     public static void unzip(String zipFilePath, String destDir) throws IOException {
         File destDirFile = new File(destDir);

@@ -10,7 +10,13 @@ import org.springframework.lang.NonNull;
  * @param <Y> valueType
  */
 public class Between<T, Y extends Comparable<? super Y>> extends PathSpecification<T> {
+    /**
+     * 最小值
+     */
     private final Y min;
+    /**
+     * 最大值
+     */
     private final Y max;
 
     /**

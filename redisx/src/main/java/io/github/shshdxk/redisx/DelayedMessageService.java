@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 延迟消息服务
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -26,7 +29,7 @@ public class DelayedMessageService {
      * 添加处理器,处理器不会自动被添加,项目初始化时请添加全部的处理器,不然会导致没添加处理器时消息无法被处理
      * @param handler 处理器
      * @param clazz 消息类型
-     * @param <T>
+     * @param <T> 消息类型
      */
     public <T> void addHandler(DelayedMessageHandler<T> handler, Class<T> clazz) {
         String key = handler.getClass() + "." + clazz.getName();
@@ -45,7 +48,7 @@ public class DelayedMessageService {
      * @param handler 处理器
      * @param message 消息内容
      * @param delaySeconds 单位:秒
-     * @param <T>
+     * @param <T> 消息类型
      */
     public <T> void addMessage(DelayedMessageHandler<T> handler, T message, long delaySeconds) {
         String key = handler.getClass() + "." + message.getClass();
@@ -67,6 +70,13 @@ public class DelayedMessageService {
         delayedQueue.offer(message, delaySeconds, TimeUnit.SECONDS);
     }
 
+    /**
+     * 处理延迟消息
+     * @param delayedQueue 延迟队列
+     * @param blockingDeque 阻塞队列
+     * @param handler 处理器
+     * @param <T> 消息类型
+     */
     public <T> void processMessages(RDelayedQueue<T> delayedQueue, RBlockingDeque<T> blockingDeque, DelayedMessageHandler<T> handler) {
         while (true) {
             try {

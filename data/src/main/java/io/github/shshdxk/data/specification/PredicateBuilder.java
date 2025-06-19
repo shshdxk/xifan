@@ -19,10 +19,25 @@ import java.util.stream.Collectors;
  * @param <T> beanType
  */
 public class PredicateBuilder<T> implements Specification<T> {
+    /**
+     * joins
+     */
     private final Map<String, Join<?, ?>> joins = Maps.newHashMap();
+    /**
+     * root
+     */
     private final Root<T> root;
+    /**
+     * criteriaBuilder
+     */
     private final CriteriaQuery<?> query;
+    /**
+     * criteriaBuilder
+     */
     private final CriteriaBuilder cb;
+    /**
+     * predicates
+     */
     private final List<Predicate> predicates = Lists.newArrayList();
 
     protected PredicateBuilder<T> self() {

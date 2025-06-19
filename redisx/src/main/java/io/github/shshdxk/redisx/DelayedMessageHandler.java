@@ -5,9 +5,9 @@ import org.redisson.api.RBlockingDeque;
 public interface DelayedMessageHandler<T> {
 
     /**
-     *
-     * @param blockingDeque
-     * @param message
+     * run handler
+     * @param blockingDeque redisson blocking queue
+     * @param message message
      * @return true or error: remove message from blockingDeque, false: keep message in blockingDeque
      */
     boolean run(RBlockingDeque<T> blockingDeque, T message);

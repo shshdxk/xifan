@@ -10,77 +10,52 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
-import java.net.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.jar.JarEntry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
+/**
+ * url工具类
+ */
 public class UrlUtils {
-    public static final String SCHEME_URL = "://";
+//    public static final String SCHEME_URL = "://";
     private static final Pattern SLASHES = Pattern.compile("//+");
     static final Set<String> IMAGE_EXTENSIONS = ImmutableSet.of("jpg", "svg", "jpeg", "png", "gif");
 
-    private UrlUtils() {
-    }
 
-    public static long getLastModified(Set<URL> fileset) {
-        long lastModified = 0L;
-
-        URL each;
-        for(Iterator<URL> var3 = fileset.iterator();
-            var3.hasNext();
-            lastModified = Math.max(lastModified, getLastModified(each))) {
-            each = (URL)var3.next();
-        }
-
-        return lastModified;
-    }
-
-    public static long getLastModified(URL resourceURL) {
-        switch (resourceURL.getProtocol()) {
-            case "jar":
-                try {
-                    JarURLConnection jarConnection = (JarURLConnection)resourceURL.openConnection();
-                    JarEntry entry = jarConnection.getJarEntry();
-                    return entry.getTime();
-                } catch (IOException var18) {
-                    return 0L;
-                }
-            case "file":
-                URLConnection connection = null;
-
-                long var6;
-                try {
-                    connection = resourceURL.openConnection();
-                    return connection.getLastModified();
-                } catch (IOException var19) {
-                    var6 = 0L;
-                } finally {
-                    if (connection != null) {
-                        try {
-                            connection.getInputStream().close();
-                        } catch (IOException ignored) {
-                        }
-                    }
-
-                }
-
-                return var6;
-            default:
-                throw new IllegalArgumentException("Unsupported protocol " + resourceURL.getProtocol() + " for resource " + resourceURL);
-        }
-    }
-
+    /**
+     * url编码
+     *
+     * @param segment url
+     * @return 编码后的url
+     */
     public static String encodeUrl(String segment) {
         return URLEncoder.encode(segment, StandardCharsets.UTF_8);
     }
 
+    /**
+     * url解码
+     *
+     * @param url url
+     * @return 解码后的url
+     */
     public static String decodeUrl(String url) {
         return URLDecoder.decode(url, StandardCharsets.UTF_8);
     }
 
+    /**
+     * url片段标准化
+     *
+     * @param segments url片段
+     * @return 标准化后的url片段
+     */
     public static List<String> normalizeUrlSegments(List<String> segments) {
         List<String> normalized = new ArrayList<>();
 
@@ -94,6 +69,12 @@ public class UrlUtils {
         return normalized;
     }
 
+    /**
+     * 获取url
+     *
+     * @param original url
+     * @return url片段
+     */
     public static String getUrlWithoutParameters(String original) {
         String url = original;
         int pos = original.indexOf(63);
@@ -109,6 +90,12 @@ public class UrlUtils {
         return url;
     }
 
+    /**
+     * 拼接url片段
+     *
+     * @param segments url片段
+     * @return url
+     */
     public static String concatSegments(String[] segments) {
         if (segments.length == 0) {
             return null;
@@ -131,10 +118,23 @@ public class UrlUtils {
         }
     }
 
+    /**
+     * 拼接url片段
+     *
+     * @param segments url片段
+     * @return url
+     */
     public static String concatSegments(List<String> segments) {
         return concatSegments(Iterables.toArray(segments, String.class));
     }
 
+    /**
+     * 拼接url片段
+     *
+     * @param base     url
+     * @param segments url片段
+     * @return url
+     */
     public static String concatSegments(String base, String... segments) {
         if (segments == null) {
             return base;
@@ -144,17 +144,29 @@ public class UrlUtils {
         }
     }
 
+    /**
+     * 移除url中的多余的斜杠
+     *
+     * @param path 路径
+     * @return 路径
+     */
     @Nullable
     public static String removeRedundantSlashes(String path) {
         return path == null ? null : SLASHES.matcher(path).replaceAll("/");
     }
 
+    /**
+     * 移除url中的多余的斜杠
+     *
+     * @param uri uri
+     * @return uri
+     */
     public static URI trimTrailingSlashesFromPath(URI uri) {
         String path = uri.getPath();
         if (!path.endsWith("/")) {
             return uri;
         } else {
-            while(path.endsWith("/")) {
+            while (path.endsWith("/")) {
                 path = path.substring(0, path.length() - 1);
             }
 
@@ -166,6 +178,13 @@ public class UrlUtils {
         }
     }
 
+    /**
+     * 添加参数
+     *
+     * @param name  参数名
+     * @param value 参数值
+     * @param uri   url
+     */
     public static void addParam(String name, String value, StringBuilder uri) {
         if (!uri.isEmpty()) {
             uri.append('&');
@@ -178,6 +197,12 @@ public class UrlUtils {
 
     }
 
+    /**
+     * 添加参数
+     *
+     * @param params 参数
+     * @param uri    url
+     */
     public static void addParams(Map<String, String> params, StringBuilder uri) {
         if (params != null && !params.isEmpty()) {
 
@@ -188,12 +213,17 @@ public class UrlUtils {
         }
     }
 
+    /**
+     * 获取参数
+     *
+     * @param uri  url
+     * @param name 参数名
+     * @return 参数值
+     */
     public static String getParam(URI uri, String name) {
         String query = uri.getRawQuery();
         if (query != null && !query.isEmpty()) {
             String[] params = query.split("&");
-            int var5 = params.length;
-
             for (String param : params) {
                 String[] parts = param.split("=");
                 if (parts.length == 2 && name.equals(parts[0])) {
@@ -207,12 +237,24 @@ public class UrlUtils {
         }
     }
 
+    /**
+     * 判断url是否是图片
+     *
+     * @param url url
+     * @return 是否是图片
+     */
     public static boolean isImage(String url) {
         String text = getUrlWithoutParameters(url);
         String ext = FilenameUtils.getExtension(text.toLowerCase());
         return IMAGE_EXTENSIONS.contains(ext);
     }
 
+    /**
+     * 判断url是否是绝对路径
+     *
+     * @param url url
+     * @return 是否是绝对路径
+     */
     public static boolean isAbsolute(String url) {
         if (url == null) {
             return false;
@@ -222,6 +264,12 @@ public class UrlUtils {
         }
     }
 
+    /**
+     * 判断url是否是相对路径
+     *
+     * @param url url
+     * @return 是否是相对路径
+     */
     public static boolean isRelative(String url) {
         return !isAbsolute(url);
     }

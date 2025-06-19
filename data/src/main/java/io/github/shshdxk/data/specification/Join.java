@@ -13,7 +13,13 @@ import java.util.List;
  * @param <T> beanType
  */
 public class Join<T> implements Specification<T> {
+    /**
+     * fetch path
+     */
     private final List<String> pathsToFetch;
+    /**
+     * join type
+     */
     private final JoinType joinType;
 
     /**

@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
  */
 public class OrFilter<T> implements SearchFilter<T> {
 
+    /**
+     * 条件
+     */
     private final List<SearchFilter<T>> filters;
 
     public OrFilter(List<SearchFilter<T>> filters) {

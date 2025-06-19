@@ -18,6 +18,9 @@ import java.util.Objects;
  * @param <T> beanType
  */
 public class Disjunction<T> implements Specification<T> {
+    /**
+     * or
+     */
     private final Collection<Specification<T>> specs;
 
     /**

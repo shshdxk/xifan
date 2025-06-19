@@ -14,9 +14,10 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import java.io.IOException;
 
+/**
+ * @author shshdxk
+ */
 public class StandardObjectMapper {
-    public StandardObjectMapper() {
-    }
 
     private static ObjectMapper newObjectMapper() {
         SimpleModule simpleModule = new SimpleModule();
@@ -35,10 +36,19 @@ public class StandardObjectMapper {
         return mapper;
     }
 
+    /**
+     * 获取单例
+     * @return ObjectMapper
+     */
     public static ObjectMapper getInstance() {
         return Holder.INSTANCE.objectMapper;
     }
 
+    /**
+     * 将对象转为json字符串
+     * @param data 对象
+     * @return json字符串
+     */
     public static String stringify(Object data) {
         try {
             return getInstance().writeValueAsString(data);
@@ -47,6 +57,13 @@ public class StandardObjectMapper {
         }
     }
 
+    /**
+     * 将json转为对象
+     * @param json json字符串
+     * @param type 对象类型
+     * @return 对象
+     * @param <T> 对象类型
+     */
     public static <T> T readValue(String json, TypeReference<T> type) {
         try {
             return getInstance().readValue(json, type);
@@ -55,12 +72,12 @@ public class StandardObjectMapper {
         }
     }
 
-    private static enum Holder {
+    private enum Holder {
+        /**
+         * 单例
+         */
         INSTANCE;
 
         private final ObjectMapper objectMapper = StandardObjectMapper.newObjectMapper();
-
-        private Holder() {
-        }
     }
 }

@@ -11,6 +11,9 @@ import org.springframework.data.jpa.domain.Specification;
  * @param <T> beanType
  */
 public class Not<T> implements Specification<T> {
+    /**
+     * original specification
+     */
     private final Specification<T> original;
 
     /**

@@ -27,13 +27,11 @@ public abstract class DateFilter<T> implements SearchFilter<T> {
 
     static final Pattern pTime = Pattern.compile("(?<num>\\d+)(?<unit>h|d|w|m)");
 
-    private final String original;
-
 //    private int num;
 //    private String unit;
 
     public DateFilter(String field, String param) {
-        this.original = param;
+//        this.original = param;
         this.field = field;
 
         String str = param;
@@ -112,7 +110,7 @@ public abstract class DateFilter<T> implements SearchFilter<T> {
 
     @Override
     public String toExpression() {
-        return original;
+        return field;
     }
 
     @Override

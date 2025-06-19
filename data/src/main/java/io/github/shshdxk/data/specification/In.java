@@ -8,6 +8,9 @@ import jakarta.persistence.criteria.*;
  * @param <T> beanType
  */
 public class In<T> extends PathSpecification<T> {
+    /**
+     * allowed values
+     */
     private final Object[] allowedValues;
 
     /**

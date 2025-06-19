@@ -18,6 +18,9 @@ import java.util.Objects;
  * @param <T> beanType
  */
 public class Conjunction<T> implements Specification<T> {
+    /**
+     * Specifications
+     */
     private final Collection<Specification<T>> specs;
 
     /**

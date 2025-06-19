@@ -10,7 +10,13 @@ import jakarta.persistence.criteria.*;
  * @param <Y> valueType
  */
 public class Compare<T, Y extends Comparable<? super Y>> extends PathSpecification<T> {
+    /**
+     * 比较符
+     */
     private final Operator op;
+    /**
+     * 值
+     */
     private final Y value;
 
     /**

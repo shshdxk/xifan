@@ -14,6 +14,9 @@ import java.time.*;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
+/**
+ * 时间工具类
+ */
 public class TimeUtils {
 
 
@@ -27,11 +30,26 @@ public class TimeUtils {
             "yyyy-MM-dd hh:mmaa", "yyyy-MM-dd hh:mm:ssaa", "MM dd yyyy hh:mmaa"};
     private static final String TIME_STAMP_FORMAT = "^\\d+$";
 
+    /**
+     * 时间单位枚举
+     */
     @Getter
     public enum TimeUnit {
+        /**
+         * 天
+         */
         DAY(86400000),
+        /**
+         * 小时
+         */
         HOUR(3600000),
+        /**
+         * 分钟
+         */
         MINUTE(60000),
+        /**
+         * 秒
+         */
         SECOND(1000);
 
         private final long millisecond;
@@ -192,7 +210,7 @@ public class TimeUtils {
     }
 
     /**
-     * 判断两个时间段是否有交集, e1 > s2 && s1 < e2
+     * 判断两个时间段是否有交集, {@code e1 > s2 && s1 < e2}
      *
      * @param s1  第一段事件的开始时间
      * @param e1  第一段事件的结束时间
@@ -209,7 +227,7 @@ public class TimeUtils {
     }
 
     /**
-     * 判断两个时间段是否有交集, e1 > s2 && s1 < e2
+     * 判断两个时间段是否有交集, {@code e1 > s2 && s1 < e2}
      *
      * @param s1  第一段事件的开始时间
      * @param e1  第一段事件的结束时间
@@ -472,6 +490,7 @@ public class TimeUtils {
      * @param dateTimeStr 时间字符串
      * @param parsePatterns 提供转换的时间格式
      * @return 时间
+     * @throws ParseException 转换异常
      */
     public static Date convert(String dateTimeStr, final String... parsePatterns) throws ParseException {
         for (String dateFormat : parsePatterns) {

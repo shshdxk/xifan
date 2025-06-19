@@ -11,7 +11,7 @@
 
     <groupId>io.github.shshdxk</groupId>
     <artifactId>xifan-parent</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <packaging>pom</packaging>
     <name>xifan-parent</name>
 
@@ -20,12 +20,14 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <redisson.version>3.38.1</redisson.version>
+        <tk.mybatis.version>5.0.1</tk.mybatis.version>
     </properties>
     <modules>
         <module>redisx</module>
         <module>data</module>
         <module>common</module>
         <module>xxl-job</module>
+        <module>tk</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -103,6 +105,12 @@
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>2.14.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${tk.mybatis.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
