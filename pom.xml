@@ -163,6 +163,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.11.2</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>         <!-- 源文件编码 -->
+                    <docencoding>UTF-8</docencoding>   <!-- 输出文档编码 -->
+                    <charset>UTF-8</charset>           <!-- HTML 页编码 -->
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>

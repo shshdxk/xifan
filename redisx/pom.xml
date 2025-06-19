@@ -9,6 +9,7 @@
         <artifactId>xifan-parent</artifactId>
         <version>0.0.4</version>
     </parent>
+    <name>redisx</name>
     <artifactId>redisx</artifactId>
 
     <properties>
