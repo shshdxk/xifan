@@ -21,8 +21,17 @@ import java.util.regex.Pattern;
 @Setter
 public abstract class DateFilter<T> implements SearchFilter<T> {
 
+    /**
+     * 时间字段
+     */
     private final String field;
+    /**
+     * 操作符
+     */
     private Operator operator;
+    /**
+     * 时间
+     */
     private Date date;
 
     static final Pattern pTime = Pattern.compile("(?<num>\\d+)(?<unit>h|d|w|m)");

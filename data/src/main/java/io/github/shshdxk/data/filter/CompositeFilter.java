@@ -16,7 +16,13 @@ import java.util.stream.Collectors;
 @Setter
 public class CompositeFilter<T> implements SearchFilter<T> {
 
+    /**
+     * 逻辑条件
+     */
     private List<SearchFilter<T>> filters = Lists.newArrayList();
+    /**
+     * 逻辑运算符
+     */
     private final Logic logic;
 
     public CompositeFilter(Logic logic) {

@@ -67,7 +67,7 @@ public class Conjunction<T> implements Specification<T> {
                     spec = var5.next();
                     if (!(spec instanceof Join)) {
                         if (combinedSpecs == null) {
-                            combinedSpecs = Specification.where(spec);
+                            combinedSpecs = spec;
                         } else {
                             combinedSpecs = combinedSpecs.and(spec);
                         }

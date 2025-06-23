@@ -40,45 +40,90 @@ public class PredicateBuilder<T> implements Specification<T> {
      */
     private final List<Predicate> predicates = Lists.newArrayList();
 
+    /**
+     * self
+     * @return this
+     */
     protected PredicateBuilder<T> self() {
         return this;
     }
 
+    /**
+     * constructor
+     * @param root root
+     * @param query query
+     * @param cb criteriaBuilder
+     */
     public PredicateBuilder(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         this.root = root;
         this.query = query;
         this.cb = cb;
     }
 
+    /**
+     * join
+     * @param attribute attribute
+     * @param joinType joinType
+     * @return PredicateBuilder
+     */
     public PredicateBuilder<T> join(String attribute, JoinType joinType) {
         this.joins.put(attribute, this.root.join(attribute, joinType));
         return this.self();
     }
 
+    /**
+     * like
+     * @param attribute attribute
+     * @param pattern pattern
+     * @return PredicateBuilder
+     */
     public PredicateBuilder<T> like(String attribute, String pattern) {
         this.predicates.add((new Like<T>(attribute, pattern)).toPredicate(this.root, this.query, this.cb));
         return this.self();
     }
 
+    /**
+     * eq
+     * @param attribute attribute
+     * @param value value
+     * @return PredicateBuilder
+     */
     public PredicateBuilder<T> eq(String attribute, Object value) {
         this.predicates.add(this.cb.equal(this.path(attribute), value));
         return this.self();
     }
 
+    /**
+     * after
+     * @param attribute attribute
+     * @param date date
+     * @return PredicateBuilder
+     */
     public PredicateBuilder<T> after(String attribute, Date date) {
         this.predicates.add(this.cb.greaterThan(this.path(attribute), date));
         return this.self();
     }
 
+    /**
+     * before
+     * @param attribute attribute
+     * @param date date
+     * @return PredicateBuilder
+     */
     public PredicateBuilder<T> before(String attribute, Date date) {
         this.predicates.add(this.cb.lessThan(this.path(attribute), date));
         return this.self();
     }
 
+    /**
+     * get path
+     * @param attribute attribute
+     * @param <F> field
+     * @return path
+     */
     protected <F> Path<F> path(String attribute) {
         Path<F> expr = null;
         String[] var3 = attribute.split("\\.");
-        int var4 = var3.length;
 
         for (String field : var3) {
             if (expr == null) {
@@ -91,6 +136,13 @@ public class PredicateBuilder<T> implements Specification<T> {
         return expr;
     }
 
+    /**
+     * toPredicate
+     * @param root root
+     * @param query query
+     * @param cb criteriaBuilder
+     * @return Predicate
+     */
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         List<Predicate> noNulls = this.predicates.stream().filter(Objects::nonNull).collect(Collectors.toList());

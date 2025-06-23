@@ -16,16 +16,41 @@ import java.util.regex.Pattern;
  */
 public abstract class SearchCriteria<T> extends CompositeFilter<T> {
 
+    /**
+     * qualifierRegex
+     */
     protected final Pattern qualifierRegex;
 
+    /**
+     * getQualifiers
+     * @return qualifiers
+     */
     abstract protected List<String> getQualifiers();
+    /**
+     * 创建一个过滤器
+     * @param input input
+     * @return 过滤器
+     */
     abstract protected SearchFilter<T> createFilter(String input);
+
+    /**
+     * createContainFilter
+     * @param contains contains
+     * @return containFilter
+     */
     abstract protected SearchFilter<T> createContainFilter(Set<String> contains);
 
+    /**
+     * 构造一个搜索条件
+     */
     public SearchCriteria() {
         this(Logic.AND);
     }
 
+    /**
+     * 构造一个搜索条件
+     * @param logic logic
+     */
     public SearchCriteria(Logic logic) {
         super(logic);
         this.qualifierRegex = buildQualifierRegex();
@@ -36,6 +61,10 @@ public abstract class SearchCriteria<T> extends CompositeFilter<T> {
         List<String> contains = Lists.newArrayList();
     }
 
+    /**
+     * parse
+     * @param input input
+     */
     protected void parse(String input) {
         if (Strings.isNullOrEmpty(input)) {
             return;
@@ -162,6 +191,10 @@ public abstract class SearchCriteria<T> extends CompositeFilter<T> {
         return result;
     }
 
+    /**
+     * buildQualifierRegex
+     * @return qualifierRegex
+     */
     protected Pattern buildQualifierRegex() {
         List<String> qualifiers = getQualifiers();
         String valids = Joiner.on("|").join(qualifiers);
@@ -171,6 +204,10 @@ public abstract class SearchCriteria<T> extends CompositeFilter<T> {
             Pattern.UNICODE_CASE);
     }
 
+    /**
+     * main
+     * @param args args
+     */
     public static void main(String[] args) {
         String p = "^-?(?<qualifier>id|created|updated|ended|caller|saviour|address|status):(?<value>.+)";
         Pattern pattern = Pattern.compile(p, Pattern.UNICODE_CASE);

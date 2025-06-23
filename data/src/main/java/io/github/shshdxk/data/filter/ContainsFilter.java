@@ -16,7 +16,13 @@ import java.util.Set;
 @Getter
 public class ContainsFilter<T> implements SearchFilter<T> {
 
+    /**
+     * 字段
+     */
     private final Set<String> fields;
+    /**
+     * 模式
+     */
     private final Set<String> pattern;
 
     public ContainsFilter(Set<String> fields, Set<String> pattern) {

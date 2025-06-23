@@ -10,6 +10,9 @@ import java.util.Objects;
  */
 public class NotFilter<T> implements SearchFilter<T> {
 
+    /**
+     * 逻辑NOT
+     */
     private final SearchFilter<T> filter;
 
     public NotFilter(SearchFilter<T> filter) {

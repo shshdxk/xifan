@@ -10,13 +10,29 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * 抽象列条件
+ * @param <T> beanType
+ */
 public abstract class PathSpecification<T> implements Specification<T> {
+    /**
+     * 列名
+     */
     protected String path;
 
+    /**
+     * 构造函数
+     *
+     * @param path
+     */
     public PathSpecification(String path) {
         this.path = path;
     }
 
+    /**
+     * 获取列名
+     * @return path
+     */
     protected <F> Path<F> path(Root<T> root) {
         Path<F> expr = null;
         String[] parts = this.path.split("\\.");
@@ -42,6 +58,13 @@ public abstract class PathSpecification<T> implements Specification<T> {
         }
     }
 
+    /**
+     * 获取Join
+     * @param root root
+     * @param join join
+     * @param field field
+     * @return join
+     */
     private Join<T, ?> join(Root<T> root, Join<T, ?> join, String field) {
         Set<Join<T, ?>> joins = root.getJoins();
         Iterator<Join<T, ?>> var5 = joins.iterator();
@@ -60,10 +83,19 @@ public abstract class PathSpecification<T> implements Specification<T> {
         return each;
     }
 
+    /**
+     * hashCode
+     * @return hashCode
+     */
     public int hashCode() {
         return Objects.hashCode(this.path);
     }
 
+    /**
+     * equals
+     * @param obj obj
+     * @return equals
+     */
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

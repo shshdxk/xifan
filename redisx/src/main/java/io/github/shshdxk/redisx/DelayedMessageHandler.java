@@ -2,6 +2,9 @@ package io.github.shshdxk.redisx;
 
 import org.redisson.api.RBlockingDeque;
 
+/**
+ * 延迟消息处理接口
+ */
 public interface DelayedMessageHandler<T> {
 
     /**

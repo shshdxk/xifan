@@ -12,10 +12,26 @@ import java.util.Objects;
  */
 @Getter
 public class GenericFilter<T> implements SearchFilter<T> {
+    /**
+     * field
+     */
     private final String field;
+    /**
+     * operator
+     */
     private final Operator operator;
+    /**
+     * value
+     */
     private final Object value;
 
+    /**
+     * constructor
+     *
+     * @param field    field
+     * @param operator operator
+     * @param value    value
+     */
     public GenericFilter(String field, Operator operator, Object value) {
         this.field = field;
         this.operator = operator;
