@@ -6,14 +6,12 @@
     <parent>
         <groupId>io.github.shshdxk</groupId>
         <artifactId>xifan-parent</artifactId>
-        <version>0.0.4</version>
+        <version>0.0.5</version>
     </parent>
     <name>data</name>
     <artifactId>data</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
