@@ -9,7 +9,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
@@ -150,7 +149,6 @@ public class UrlUtils {
      * @param path 路径
      * @return 路径
      */
-    @Nullable
     public static String removeRedundantSlashes(String path) {
         return path == null ? null : SLASHES.matcher(path).replaceAll("/");
     }

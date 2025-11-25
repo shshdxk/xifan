@@ -6,12 +6,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.5</version>
+        <version>3.5.8</version>
     </parent>
 
     <groupId>io.github.shshdxk</groupId>
     <artifactId>xifan-parent</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <packaging>pom</packaging>
     <name>xifan-parent</name>
 
@@ -19,7 +19,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <redisson.version>3.51.0</redisson.version>
+        <redisson.version>3.52.0</redisson.version>
         <tk.mybatis.version>5.0.1</tk.mybatis.version>
     </properties>
     <modules>
@@ -44,44 +44,44 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
-                <version>6.2.8</version>
+                <version>6.2.14</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>jakarta.persistence</groupId>
                 <artifactId>jakarta.persistence-api</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-jpa</artifactId>
-                <version>3.5.1</version>
+                <version>3.5.6</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.18.0</version>
+                <version>2.21.0</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.18.0</version>
+                <version>3.20.0</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>33.4.0-jre</version>
+                <version>33.5.0-jre</version>
                 <scope>compile</scope>
             </dependency>
             <!-- xxl-job -->
             <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
-                <version>2.5.0</version>
+                <version>3.2.0</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
@@ -91,15 +91,14 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
+                <groupId>tools.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.18.2</version>
-                <scope>compile</scope>
+                <version>3.0.2</version>
             </dependency>
             <dependency>
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
-                <version>1.9.0</version>
+                <version>1.10.1</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>
