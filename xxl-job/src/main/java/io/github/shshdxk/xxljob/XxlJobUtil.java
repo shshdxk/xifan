@@ -1,6 +1,5 @@
 package io.github.shshdxk.xxljob;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.shshdxk.common.OkHttpUtils;
 import io.github.shshdxk.common.UrlUtils;
 import io.github.shshdxk.common.jackson.StandardObjectMapper;
@@ -10,6 +9,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
 import okhttp3.Response;
+import tools.jackson.core.type.TypeReference;
 
 import java.io.IOException;
 import java.net.URLEncoder;
