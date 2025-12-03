@@ -17,12 +17,10 @@ public class StandardObjectMapper {
 
     private static ObjectMapper newObjectMapper() {
         SimpleModule simpleModule = new SimpleModule();
-//        simpleModule.addSerializer(Long.class, LongToStringSerializer.instance);
-//        simpleModule.addSerializer(Long.TYPE, LongToStringSerializer.instance);
-//        simpleModule.addSerializer(long[].class, new LongArrayToStringArraySerializer());
         return JsonMapper.builder()
                 .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
                 .disable(MapperFeature.USE_GETTERS_AS_SETTERS)
                 .enable(JsonReadFeature.ALLOW_JAVA_COMMENTS)
                 .enable(JsonReadFeature.ALLOW_YAML_COMMENTS)
@@ -66,6 +64,23 @@ public class StandardObjectMapper {
          */
         INSTANCE;
 
-        private final ObjectMapper objectMapper = StandardObjectMapper.newObjectMapper();
+        private ObjectMapper objectMapper = StandardObjectMapper.newObjectMapper();
+
+        /**
+         * 重新构建ObjectMapper
+         * @param simpleModule 模块
+         */
+        public void rebuild(SimpleModule simpleModule) {
+            objectMapper = objectMapper.rebuild().addModule(simpleModule).build();
+        }
+
+    }
+
+    /**
+     * 重新构建ObjectMapper
+     * @param simpleModule 模块
+     */
+    public static void rebuild(SimpleModule simpleModule) {
+        Holder.INSTANCE.rebuild(simpleModule);
     }
 }

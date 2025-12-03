@@ -56,7 +56,7 @@ public class CompositeFilter<T> implements SearchFilter<T> {
     @Override
     public Specification<T> toSpecification() {
         if (filters.isEmpty()) {
-            return null;
+            return Specifications.and();
         }
 
         if (logic == Logic.AND) {
