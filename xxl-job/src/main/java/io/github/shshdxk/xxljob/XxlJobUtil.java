@@ -50,7 +50,7 @@ public class XxlJobUtil {
      * 登录
      */
     public static void login() {
-        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "login");
+        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "doLogin");
         Map<String, Object> param = new HashMap<>();
         param.put("userName", xxlJobRegisterConfig.getUsername());
         param.put("password", xxlJobRegisterConfig.getPassword());
