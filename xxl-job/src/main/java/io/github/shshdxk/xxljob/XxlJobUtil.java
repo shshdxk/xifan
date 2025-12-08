@@ -50,7 +50,7 @@ public class XxlJobUtil {
      * 登录
      */
     public static void login() {
-        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "doLogin");
+        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "auth/doLogin");
         Map<String, Object> param = new HashMap<>();
         param.put("userName", xxlJobRegisterConfig.getUsername());
         param.put("password", xxlJobRegisterConfig.getPassword());
@@ -58,8 +58,8 @@ public class XxlJobUtil {
             String cookies = response.headers("Set-Cookie").get(0);
             for (String s : cookies.split(";")) {
                 String[] kv = s.split("=");
-                if ("XXL_JOB_LOGIN_IDENTITY".equalsIgnoreCase(kv[0])) {
-                    loginCookie.put("XXL_JOB_LOGIN_IDENTITY", kv[1].trim());
+                if ("xxl_job_login_token".equalsIgnoreCase(kv[0])) {
+                    loginCookie.put("xxl_job_login_token", kv[1].trim());
                     header = header.newBuilder()
                             .add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                             .add("Cookie", kv[0] + "=" + kv[1])
@@ -78,9 +78,9 @@ public class XxlJobUtil {
      */
     public static String getCookie() {
         for (int i = 0; i < 3; i++) {
-            String cookieStr = loginCookie.get("XXL_JOB_LOGIN_IDENTITY");
+            String cookieStr = loginCookie.get("xxl_job_login_token");
             if (cookieStr != null) {
-                return "XXL_JOB_LOGIN_IDENTITY=" + cookieStr;
+                return "xxl_job_login_token=" + cookieStr;
             }
             login();
         }
@@ -97,10 +97,12 @@ public class XxlJobUtil {
         Map<String, Object> param = new HashMap<>();
         param.put("appname", xxlJobRegisterConfig.getAppname());
         param.put("title", xxlJobRegisterConfig.getTitle());
+        param.put("offset", 0);
+        param.put("pagesize", 10);
         try {
             Response response = OkHttpUtils.post(url, header, null, getFormParam(param));
-            XxlJobData<List<XxlJobGroup>> listData = StandardObjectMapper.readValue(OkHttpUtils.getResponseBody(response).get(), new TypeReference<>(){});
-            return listData.data.stream()
+            XxlJobData<XxlJobPageData<List<XxlJobGroup>>> listData = StandardObjectMapper.readValue(OkHttpUtils.getResponseBody(response).get(), new TypeReference<>(){});
+            return listData.data.data.stream()
                     .filter(xxlJobGroup -> xxlJobGroup.getAppname().equals(xxlJobRegisterConfig.getAppname()))
                     .collect(Collectors.toList());
         } catch (IOException e) {
@@ -130,7 +132,7 @@ public class XxlJobUtil {
      */
     public static boolean autoRegisterGroup() {
         getCookie();
-        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "jobgroup/save");
+        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "jobgroup/insert");
         Map<String, Object> param = new HashMap<>();
         param.put("appname", xxlJobRegisterConfig.getAppname());
         param.put("title", xxlJobRegisterConfig.getTitle());
@@ -161,8 +163,8 @@ public class XxlJobUtil {
         param.put("author", "");
         try {
             Response response = OkHttpUtils.post(url, header, null, getFormParam(param));
-            XxlJobData<List<XxlJobInfo>> listData = StandardObjectMapper.readValue(OkHttpUtils.getResponseBody(response).get(), new TypeReference<>(){});
-            return listData.data;
+            XxlJobData<XxlJobPageData<List<XxlJobInfo>>> listData = StandardObjectMapper.readValue(OkHttpUtils.getResponseBody(response).get(), new TypeReference<>(){});
+            return listData.data.data;
         } catch (IOException e) {
             log.error("xxlJob自动登录失败");
         }
@@ -176,13 +178,13 @@ public class XxlJobUtil {
      */
     public static Integer addJobInfo(XxlJobInfo xxlJobInfo) {
         getCookie();
-        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "jobinfo/add");
+        String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "jobinfo/insert");
         Map<String, Object> param = StandardObjectMapper.getInstance().convertValue(xxlJobInfo, new TypeReference<>() {});
         try {
             Response response = OkHttpUtils.post(url, header, null, getFormParam(param));
             String r = OkHttpUtils.getResponseBody(response).get();
             XxlJobData<Void> data = StandardObjectMapper.readValue(r, new TypeReference<>(){});
-            return Integer.parseInt(data.content);
+            return Integer.parseInt(data.msg);
         } catch (IOException e) {
             log.error("xxlJob自动登录失败");
         }
@@ -198,7 +200,21 @@ public class XxlJobUtil {
     public static class XxlJobData<T> {
         private T data;
         private int code;
-        private String content;
+        private String msg;
+        private boolean success;
+    }
+
+    /**
+     * xxlJob返回数据
+     * @param <T> 类型
+     */
+    @Getter
+    @Setter
+    public static class XxlJobPageData<T> {
+        private T data;
+        private int pagesize;
+        private int offset;
+        private int total;
     }
 
     /**

@@ -11,7 +11,7 @@
 
     <groupId>io.github.shshdxk</groupId>
     <artifactId>xifan-parent</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
     <name>xifan-parent</name>
 
@@ -81,7 +81,7 @@
             <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
