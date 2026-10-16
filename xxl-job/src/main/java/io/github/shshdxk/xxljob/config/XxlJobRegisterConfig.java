@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class XxlJobRegisterConfig {
 
+    private String accessToken;
     private String username;
     private String password;
     /**

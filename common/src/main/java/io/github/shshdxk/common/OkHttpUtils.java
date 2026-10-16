@@ -457,7 +457,7 @@ public class OkHttpUtils {
      */
     public static Optional<String> getResponseBody(Response response) {
         try (ResponseBody body = response.body()) {
-            return body == null ? Optional.empty() : Optional.of(body.string());
+            return Optional.of(body.string());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

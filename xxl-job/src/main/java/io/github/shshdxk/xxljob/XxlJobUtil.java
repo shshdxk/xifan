@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Headers;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 import tools.jackson.core.type.TypeReference;
 
 import java.io.IOException;
@@ -96,7 +97,6 @@ public class XxlJobUtil {
         String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "jobgroup/pageList");
         Map<String, Object> param = new HashMap<>();
         param.put("appname", xxlJobRegisterConfig.getAppname());
-        param.put("title", xxlJobRegisterConfig.getTitle());
         param.put("offset", 0);
         param.put("pagesize", 10);
         try {
@@ -135,11 +135,16 @@ public class XxlJobUtil {
         String url= UrlUtils.concatSegments(xxlJobRegisterConfig.getAdminAddress(), "jobgroup/insert");
         Map<String, Object> param = new HashMap<>();
         param.put("appname", xxlJobRegisterConfig.getAppname());
-        param.put("title", xxlJobRegisterConfig.getTitle());
+        param.put("name", xxlJobRegisterConfig.getTitle());
+        String accessToken = xxlJobRegisterConfig.getAccessToken();
+        if (StringUtils.isBlank(accessToken)) {
+            accessToken = "default_token";
+        }
+        param.put("accessToken", accessToken);
         try {
             Response response = OkHttpUtils.post(url, header, null, getFormParam(param));
             XxlJobData<Void> listData = StandardObjectMapper.readValue(OkHttpUtils.getResponseBody(response).get(), new TypeReference<>(){});
-            return listData.getCode() == 200;
+            return listData.isSuccess();
         } catch (IOException e) {
             log.error("xxlJob自动登录失败");
         }
@@ -159,7 +164,7 @@ public class XxlJobUtil {
         param.put("jobGroup", jobGroupId);
         param.put("executorHandler", executorHandler);
         param.put("triggerStatus", -1);
-        param.put("jobDesc", "");
+        param.put("name", "");
         param.put("author", "");
         try {
             Response response = OkHttpUtils.post(url, header, null, getFormParam(param));
@@ -183,8 +188,8 @@ public class XxlJobUtil {
         try {
             Response response = OkHttpUtils.post(url, header, null, getFormParam(param));
             String r = OkHttpUtils.getResponseBody(response).get();
-            XxlJobData<Void> data = StandardObjectMapper.readValue(r, new TypeReference<>(){});
-            return Integer.parseInt(data.msg);
+            XxlJobData<Integer> data = StandardObjectMapper.readValue(r, new TypeReference<>(){});
+            return data.getData();
         } catch (IOException e) {
             log.error("xxlJob自动登录失败");
         }
@@ -240,7 +245,7 @@ public class XxlJobUtil {
         /**
          * 任务描述
          */
-        private String jobDesc;
+        private String name;
         /**
          * 负责人
          */

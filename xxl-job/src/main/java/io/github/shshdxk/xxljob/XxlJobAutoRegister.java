@@ -102,7 +102,7 @@ public class XxlJobAutoRegister {
     private XxlJobUtil.XxlJobInfo createXxlJobInfo(XxlJobUtil.XxlJobGroup xxlJobGroup, XxlJob xxlJob, XxlRegister xxlRegister) {
         XxlJobUtil.XxlJobInfo xxlJobInfo = new XxlJobUtil.XxlJobInfo();
         xxlJobInfo.setJobGroup(xxlJobGroup.getId());
-        xxlJobInfo.setJobDesc(xxlRegister.jobDesc());
+        xxlJobInfo.setName(xxlRegister.jobDesc());
         xxlJobInfo.setAuthor(xxlRegister.author());
         xxlJobInfo.setAlarmEmail(xxlRegister.alarmEmail());
         xxlJobInfo.setScheduleType(xxlRegister.scheduleType().getCode());
